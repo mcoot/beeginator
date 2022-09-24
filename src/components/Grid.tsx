@@ -1,16 +1,28 @@
 import React, { useState } from 'react';
+import { useAppState } from '../state-store';
 import './Grid.css';
 import GridCell from './GridCell';
 
 type GridSelection = {row: number, col: number} | null;
 
-function Grid() {
-  const gridData = [['hmmmm', null, 'thonk_derp', null], [null, null, null, null], [null, 'this', null, null]];
+interface GridProps {
+  onCellClick: (row: number, col: number) => void;
+}
+
+function Grid({onCellClick}: GridProps) {
+  const gridData = useAppState((state) => state.gridData);
+
+  const gridStyle = {
+    border: '2px solid black',
+    display: 'grid',
+    gridTemplateColumns: `repeat(${gridData[0]?.length ?? 1}, 1fr)`,
+    gridTemplateRows: `repeat(${gridData.length}, 1fr)`,
+  };
 
   const [selected, setSelected] = useState<GridSelection>(null);
 
   return (
-    <div className='Grid'>
+    <div className='Grid' style={gridStyle}>
       {
         gridData.map((rowData, rowIdx) => {
           return rowData.map((cellEmoji, colIdx) => {
@@ -28,6 +40,13 @@ function Grid() {
                 }}
                 onMouseLeave={() => {
                   setSelected(null);
+                }}
+                onClick={() => {
+                  if (!selected) {
+                    return;
+                  }
+
+                  onCellClick(selected.row, selected.col);
                 }}
               />
             );

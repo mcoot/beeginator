@@ -1,4 +1,5 @@
 import React from 'react';
+import { getImageSourceForEmoji } from '../emoji';
 import './GridCell.css';
 
 interface GridCellProps {
@@ -9,29 +10,17 @@ interface GridCellProps {
 
   onMouseEnter: () => void;
   onMouseLeave: () => void;
+  onClick: () => void;
 }
 
-function getEmojiImgSrc(emojiName: string | null): string | null {
-  switch (emojiName) {
-  case 'hmmmm':
-    return 'https://emoji.slack-edge.com/T0D0DT1F0/hmmmm/7beb6f62ba141947.png';
-  case 'this':
-    return 'https://emoji.slack-edge.com/T0D0DT1F0/this/3c522ac8fd93caac.png';
-  case 'thonk_derp':
-    return 'https://emoji.slack-edge.com/T0D0DT1F0/thonk_derp/fcb552bff63169b3.png';
-  default:
-    return null;
-  }
-}
-
-function GridCell({row, column, emojiName, selected, onMouseEnter, onMouseLeave}: GridCellProps) {
+function GridCell({row, column, emojiName, selected, onMouseEnter, onMouseLeave, onClick}: GridCellProps) {
   const cellStyle = {
     gridColumn: column + 1,
     gridRow: row + 1,
     background: 'white',
   };
 
-  const emojiImgSrc = getEmojiImgSrc(emojiName);
+  const emojiImgSrc = emojiName ?getImageSourceForEmoji(emojiName) : null;
 
   const contentStyle = {
     backgroundImage: `url("${emojiImgSrc}")`,
@@ -41,7 +30,13 @@ function GridCell({row, column, emojiName, selected, onMouseEnter, onMouseLeave}
   };
 
   return (
-    <div style={cellStyle} className='GridCell' onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <div 
+      style={cellStyle} 
+      className='GridCell' 
+      onMouseEnter={onMouseEnter} 
+      onMouseLeave={onMouseLeave}
+      onClick={onClick}
+    >
       <div className="GridCellContent" style={contentStyle}>
       </div> 
       {
