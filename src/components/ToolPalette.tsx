@@ -1,7 +1,6 @@
 import React from 'react';
 import { getEmojiList } from '../emoji';
 import Grid from './Grid';
-import GridCell from './GridCell';
 
 interface ToolPaletteProps {
   onPaletteSelect: (emoji: string | null) => void;

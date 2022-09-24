@@ -26,22 +26,6 @@ function App() {
             console.log(`set tool to ${emoji}`);
           }}
         />
-        {/* <button onClick={() => {
-          switch (currentTool) {
-          case null:
-            setTool('hmmmm');
-            break;
-          case 'hmmmm':
-            setTool('thonk_derp');
-            break;
-          case 'thonk_derp':
-            setTool('this');
-            break;
-          default:
-            setTool(null);
-          }
-          
-        }}>Switch tool (currently: {currentTool ?? '<clear>'})</button> */}
       </header>
     </div>
   );
