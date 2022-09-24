@@ -6,16 +6,19 @@ import GridCell from './GridCell';
 type GridSelection = {row: number, col: number} | null;
 
 interface GridProps {
-  onCellClick: (row: number, col: number) => void;
+  gridData: (string | null)[][];
+  maxColumns?: number;
+
+  onCellClick: (row: number, col: number, emoji: string | null) => void;
 }
 
-function Grid({onCellClick}: GridProps) {
-  const gridData = useAppState((state) => state.gridData);
+function Grid({gridData, maxColumns, onCellClick}: GridProps) {
+  const numColumns = maxColumns ?? gridData[0]?.length ?? 1; 
 
   const gridStyle = {
     border: '2px solid black',
     display: 'grid',
-    gridTemplateColumns: `repeat(${gridData[0]?.length ?? 1}, 1fr)`,
+    gridTemplateColumns: `repeat(${numColumns}, 1fr)`,
     gridTemplateRows: `repeat(${gridData.length}, 1fr)`,
   };
 
@@ -33,7 +36,7 @@ function Grid({onCellClick}: GridProps) {
                 key={`cell-${colIdx}-${rowIdx}`} 
                 row={rowIdx} 
                 column={colIdx} 
-                emojiName={cellEmoji}
+                emoji={cellEmoji}
                 selected={isSelected ?? false}
                 onMouseEnter={() => {
                   setSelected({row: rowIdx, col: colIdx});
@@ -42,11 +45,10 @@ function Grid({onCellClick}: GridProps) {
                   setSelected(null);
                 }}
                 onClick={() => {
-                  if (!selected) {
+                  if (!isSelected) {
                     return;
                   }
-
-                  onCellClick(selected.row, selected.col);
+                  onCellClick(rowIdx, colIdx, cellEmoji);
                 }}
               />
             );

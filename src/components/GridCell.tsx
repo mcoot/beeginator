@@ -5,7 +5,7 @@ import './GridCell.css';
 interface GridCellProps {
   row: number;
   column: number;
-  emojiName: string | null;
+  emoji: string | null;
   selected: boolean;
 
   onMouseEnter: () => void;
@@ -13,14 +13,14 @@ interface GridCellProps {
   onClick: () => void;
 }
 
-function GridCell({row, column, emojiName, selected, onMouseEnter, onMouseLeave, onClick}: GridCellProps) {
+function GridCell({row, column, emoji, selected, onMouseEnter, onMouseLeave, onClick}: GridCellProps) {
   const cellStyle = {
     gridColumn: column + 1,
     gridRow: row + 1,
     background: 'white',
   };
 
-  const emojiImgSrc = emojiName ?getImageSourceForEmoji(emojiName) : null;
+  const emojiImgSrc = emoji ?getImageSourceForEmoji(emoji) : null;
 
   const contentStyle = {
     backgroundImage: `url("${emojiImgSrc}")`,
