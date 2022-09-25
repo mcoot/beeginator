@@ -16,8 +16,8 @@ All this is a random hack out of boredom while in covid iso so dunno that I'll g
 * Creating and using multi-emoji stamps from a stamp toolbox
 * Some means of persisting stamps
 * Some means of persisting, returning to, sharing grid designs
-* Import from slack copy-paste to grid
 * Dynamically get emoji from slack (per workspace? somehow?)
 
 ## QoL
 * Toggle for click-to-place vs drag-to-place
+* Import from slack copy-paste to grid
