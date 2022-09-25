@@ -10,7 +10,12 @@ interface ToolPaletteProps {
 }
 
 export function ToolPalette({mouseIsDown, rightMouseIsDown, onPaletteSelect}: ToolPaletteProps) {
-  const emojiTools = [getEmojiList()];
+  // Arrange emoji tools into rows of 2
+  const rawEmojiList = getEmojiList();
+  const emojiTools: (string | null)[][] = [];
+  for (let chunkIdx = 0; chunkIdx < rawEmojiList.length; chunkIdx += 2) {
+    emojiTools.push(rawEmojiList.slice(chunkIdx, chunkIdx + 2));
+  }
   
   // const paletteGridStyle = {
   //   border: '2px solid black',
@@ -29,7 +34,6 @@ export function ToolPalette({mouseIsDown, rightMouseIsDown, onPaletteSelect}: To
         gridData={emojiTools}
         mouseIsDown={mouseIsDown}
         rightMouseIsDown={rightMouseIsDown}
-        maxColumns={2}
         onCellClick={(row, col, emoji) => {
           onPaletteSelect(emoji);
         }}

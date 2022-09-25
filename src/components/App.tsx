@@ -46,6 +46,14 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <ToolPalette
+          mouseIsDown={mouseIsDown}
+          rightMouseIsDown={rightMouseIsDown}
+          onPaletteSelect={(emoji) => {
+            setTool(emoji);
+            console.log(`set tool to ${emoji}`);
+          }}
+        />
         <Grid 
           gridData={gridData}
           mouseIsDown={mouseIsDown}
@@ -57,14 +65,6 @@ function App() {
           onCellRightClick={(row, col) => {
             console.log(`Clearing r${row}c${col}`);
             update(row, col, null);
-          }}
-        />
-        <ToolPalette
-          mouseIsDown={mouseIsDown}
-          rightMouseIsDown={rightMouseIsDown}
-          onPaletteSelect={(emoji) => {
-            setTool(emoji);
-            console.log(`set tool to ${emoji}`);
           }}
         />
       </header>

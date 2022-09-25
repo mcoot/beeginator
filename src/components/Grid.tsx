@@ -8,7 +8,6 @@ interface GridProps {
   gridData: (string | null)[][];
   mouseIsDown: boolean;
   rightMouseIsDown: boolean;
-  maxColumns?: number;
 
   onCellClick: (row: number, col: number, emoji: string | null) => void;
   onCellRightClick?: (row: number, col: number, emoji: string | null) => void;
@@ -16,21 +15,16 @@ interface GridProps {
 
 function Grid({
   gridData, 
-  maxColumns, 
   mouseIsDown, 
   rightMouseIsDown, 
   onCellClick, 
   onCellRightClick
 }: GridProps) {
-  
-
-  const numColumns = maxColumns ?? gridData[0]?.length ?? 1; 
-
-  const gridStyle = {
+  const gridStyle: React.CSSProperties = {
     border: '2px solid black',
     display: 'grid',
-    gridTemplateColumns: `repeat(${numColumns}, 1fr)`,
-    gridTemplateRows: `repeat(${gridData.length}, 1fr)`,
+    gridTemplateColumns: 'repeat(auto-fill, 1fr)',
+    gridTemplateRows: 'repeat(auto-fill, 1fr)',
   };
 
   const [selected, setSelected] = useState<GridSelection>(null);
