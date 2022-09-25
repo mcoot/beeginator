@@ -4,15 +4,13 @@ import Grid from './Grid';
 
 interface ToolPaletteProps {
   mouseIsDown: boolean;
+  rightMouseIsDown: boolean;
 
   onPaletteSelect: (emoji: string | null) => void;
 }
 
-export function ToolPalette({mouseIsDown, onPaletteSelect}: ToolPaletteProps) {
-  const emojiTools = [[
-    null,
-    ...getEmojiList(),
-  ]];
+export function ToolPalette({mouseIsDown, rightMouseIsDown, onPaletteSelect}: ToolPaletteProps) {
+  const emojiTools = [getEmojiList()];
   
   // const paletteGridStyle = {
   //   border: '2px solid black',
@@ -30,6 +28,7 @@ export function ToolPalette({mouseIsDown, onPaletteSelect}: ToolPaletteProps) {
       <Grid
         gridData={emojiTools}
         mouseIsDown={mouseIsDown}
+        rightMouseIsDown={rightMouseIsDown}
         maxColumns={2}
         onCellClick={(row, col, emoji) => {
           onPaletteSelect(emoji);

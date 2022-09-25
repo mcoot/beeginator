@@ -7,13 +7,21 @@ type GridSelection = {row: number, col: number} | null;
 interface GridProps {
   gridData: (string | null)[][];
   mouseIsDown: boolean;
+  rightMouseIsDown: boolean;
   maxColumns?: number;
 
-  onCellClick?: (row: number, col: number, emoji: string | null) => void;
-  onCellDragOver?: (row: number, col: number, emoji: string | null) => void;
+  onCellClick: (row: number, col: number, emoji: string | null) => void;
+  onCellRightClick?: (row: number, col: number, emoji: string | null) => void;
 }
 
-function Grid({gridData, maxColumns, mouseIsDown, onCellClick}: GridProps) {
+function Grid({
+  gridData, 
+  maxColumns, 
+  mouseIsDown, 
+  rightMouseIsDown, 
+  onCellClick, 
+  onCellRightClick
+}: GridProps) {
   
 
   const numColumns = maxColumns ?? gridData[0]?.length ?? 1; 
@@ -31,6 +39,7 @@ function Grid({gridData, maxColumns, mouseIsDown, onCellClick}: GridProps) {
     <div 
       className='Grid' 
       style={gridStyle}
+      onContextMenu={(ev) => ev.preventDefault()}
     >
       {
         gridData.map((rowData, rowIdx) => {
@@ -46,13 +55,19 @@ function Grid({gridData, maxColumns, mouseIsDown, onCellClick}: GridProps) {
                 selected={isSelected ?? false}
                 onMouseEnter={() => {
                   setSelected({row: rowIdx, col: colIdx});
-                  if (!mouseIsDown) {
-                    return;
+
+                  if (mouseIsDown) {
+                    onCellClick(rowIdx, colIdx, cellEmoji);
+                  } else if (rightMouseIsDown) {
+                    onCellRightClick?.(rowIdx, colIdx, cellEmoji);
                   }
-                  onCellClick?.(rowIdx, colIdx, cellEmoji);
                 }}
-                onMouseDown={() => {
-                  onCellClick?.(rowIdx, colIdx, cellEmoji);
+                onMouseDown={(ev: MouseEvent) => {
+                  if (ev.button === 0) {
+                    onCellClick(rowIdx, colIdx, cellEmoji);
+                  } else if (ev.button === 2) {
+                    onCellRightClick?.(rowIdx, colIdx, cellEmoji);
+                  }
                 }}
                 onMouseLeave={() => {
                   setSelected(null);

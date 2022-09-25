@@ -10,7 +10,8 @@ interface GridCellProps {
 
   onMouseEnter: () => void;
   onMouseLeave: () => void;
-  onMouseDown: () => void;
+  // Difficulty typing this event...
+  onMouseDown: (ev: any) => void;
 }
 
 function GridCell({row, column, emoji, selected, onMouseEnter, onMouseLeave, onMouseDown}: GridCellProps) {
