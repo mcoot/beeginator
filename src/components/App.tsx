@@ -3,6 +3,7 @@ import Grid from './Grid';
 import './App.css';
 import { useAppState } from '../state-store';
 import { ToolPalette } from './ToolPalette';
+import { renderToSlackString } from '../renderToSlackString';
 
 function App() {
   // We need to know if mouse is down anywhere on the app
@@ -67,6 +68,11 @@ function App() {
             update(row, col, null);
           }}
         />
+        <button
+          onClick={() => {
+            alert(renderToSlackString(gridData, 'github_square1'));
+          }}
+        >Render</button>
       </header>
     </div>
   );
