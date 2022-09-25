@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useAppState } from '../state-store';
 import './Grid.css';
 import GridCell from './GridCell';
 
@@ -7,12 +6,16 @@ type GridSelection = {row: number, col: number} | null;
 
 interface GridProps {
   gridData: (string | null)[][];
+  mouseIsDown: boolean;
   maxColumns?: number;
 
-  onCellClick: (row: number, col: number, emoji: string | null) => void;
+  onCellClick?: (row: number, col: number, emoji: string | null) => void;
+  onCellDragOver?: (row: number, col: number, emoji: string | null) => void;
 }
 
-function Grid({gridData, maxColumns, onCellClick}: GridProps) {
+function Grid({gridData, maxColumns, mouseIsDown, onCellClick}: GridProps) {
+  
+
   const numColumns = maxColumns ?? gridData[0]?.length ?? 1; 
 
   const gridStyle = {
@@ -25,7 +28,10 @@ function Grid({gridData, maxColumns, onCellClick}: GridProps) {
   const [selected, setSelected] = useState<GridSelection>(null);
 
   return (
-    <div className='Grid' style={gridStyle}>
+    <div 
+      className='Grid' 
+      style={gridStyle}
+    >
       {
         gridData.map((rowData, rowIdx) => {
           return rowData.map((cellEmoji, colIdx) => {
@@ -40,15 +46,16 @@ function Grid({gridData, maxColumns, onCellClick}: GridProps) {
                 selected={isSelected ?? false}
                 onMouseEnter={() => {
                   setSelected({row: rowIdx, col: colIdx});
+                  if (!mouseIsDown) {
+                    return;
+                  }
+                  onCellClick?.(rowIdx, colIdx, cellEmoji);
+                }}
+                onMouseDown={() => {
+                  onCellClick?.(rowIdx, colIdx, cellEmoji);
                 }}
                 onMouseLeave={() => {
                   setSelected(null);
-                }}
-                onClick={() => {
-                  if (!isSelected) {
-                    return;
-                  }
-                  onCellClick(rowIdx, colIdx, cellEmoji);
                 }}
               />
             );

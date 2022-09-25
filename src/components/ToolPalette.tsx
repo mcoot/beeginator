@@ -3,10 +3,12 @@ import { getEmojiList } from '../emoji';
 import Grid from './Grid';
 
 interface ToolPaletteProps {
+  mouseIsDown: boolean;
+
   onPaletteSelect: (emoji: string | null) => void;
 }
 
-export function ToolPalette({onPaletteSelect}: ToolPaletteProps) {
+export function ToolPalette({mouseIsDown, onPaletteSelect}: ToolPaletteProps) {
   const emojiTools = [[
     null,
     ...getEmojiList(),
@@ -27,6 +29,7 @@ export function ToolPalette({onPaletteSelect}: ToolPaletteProps) {
     <div className="ToolPalette">
       <Grid
         gridData={emojiTools}
+        mouseIsDown={mouseIsDown}
         maxColumns={2}
         onCellClick={(row, col, emoji) => {
           onPaletteSelect(emoji);

@@ -10,10 +10,10 @@ interface GridCellProps {
 
   onMouseEnter: () => void;
   onMouseLeave: () => void;
-  onClick: () => void;
+  onMouseDown: () => void;
 }
 
-function GridCell({row, column, emoji, selected, onMouseEnter, onMouseLeave, onClick}: GridCellProps) {
+function GridCell({row, column, emoji, selected, onMouseEnter, onMouseLeave, onMouseDown}: GridCellProps) {
   const cellStyle = {
     gridColumn: column + 1,
     gridRow: row + 1,
@@ -35,7 +35,7 @@ function GridCell({row, column, emoji, selected, onMouseEnter, onMouseLeave, onC
       className='GridCell' 
       onMouseEnter={onMouseEnter} 
       onMouseLeave={onMouseLeave}
-      onClick={onClick}
+      onMouseDown={onMouseDown}
     >
       <div className="GridCellContent" style={contentStyle}>
       </div> 
