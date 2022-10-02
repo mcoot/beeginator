@@ -9,16 +9,16 @@ interface GridProps {
   mouseIsDown: boolean;
   rightMouseIsDown: boolean;
 
-  onCellClick: (row: number, col: number, emoji: string | null) => void;
-  onCellRightClick?: (row: number, col: number, emoji: string | null) => void;
+  onCellMouseIsDown: (row: number, col: number, emoji: string | null) => void;
+  onCellRightMouseIsDown?: (row: number, col: number, emoji: string | null) => void;
 }
 
 function Grid({
   gridData, 
   mouseIsDown, 
   rightMouseIsDown, 
-  onCellClick, 
-  onCellRightClick
+  onCellMouseIsDown, 
+  onCellRightMouseIsDown
 }: GridProps) {
   const gridStyle: React.CSSProperties = {
     border: '2px solid black',
@@ -51,16 +51,16 @@ function Grid({
                   setSelected({row: rowIdx, col: colIdx});
 
                   if (mouseIsDown) {
-                    onCellClick(rowIdx, colIdx, cellEmoji);
+                    onCellMouseIsDown(rowIdx, colIdx, cellEmoji);
                   } else if (rightMouseIsDown) {
-                    onCellRightClick?.(rowIdx, colIdx, cellEmoji);
+                    onCellRightMouseIsDown?.(rowIdx, colIdx, cellEmoji);
                   }
                 }}
                 onMouseDown={(ev: MouseEvent) => {
                   if (ev.button === 0) {
-                    onCellClick(rowIdx, colIdx, cellEmoji);
+                    onCellMouseIsDown(rowIdx, colIdx, cellEmoji);
                   } else if (ev.button === 2) {
-                    onCellRightClick?.(rowIdx, colIdx, cellEmoji);
+                    onCellRightMouseIsDown?.(rowIdx, colIdx, cellEmoji);
                   }
                 }}
                 onMouseLeave={() => {

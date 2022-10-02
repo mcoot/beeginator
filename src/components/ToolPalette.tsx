@@ -1,20 +1,27 @@
 import React from 'react';
-import { getEmojiList } from '../emoji';
 import Grid from './Grid';
 
 interface ToolPaletteProps {
   mouseIsDown: boolean;
   rightMouseIsDown: boolean;
 
+  emojiList: (string | null)[];
+  columns: number;
+
   onPaletteSelect: (emoji: string | null) => void;
 }
 
-export function ToolPalette({mouseIsDown, rightMouseIsDown, onPaletteSelect}: ToolPaletteProps) {
-  // Arrange emoji tools into rows of 2
-  const rawEmojiList = getEmojiList();
+export function ToolPalette({
+  mouseIsDown, 
+  rightMouseIsDown, 
+  emojiList,
+  columns,
+  onPaletteSelect,
+}: ToolPaletteProps) {
+  // Arrange emoji tools into rows
   const emojiTools: (string | null)[][] = [];
-  for (let chunkIdx = 0; chunkIdx < rawEmojiList.length; chunkIdx += 2) {
-    emojiTools.push(rawEmojiList.slice(chunkIdx, chunkIdx + 2));
+  for (let chunkIdx = 0; chunkIdx < emojiList.length; chunkIdx += columns) {
+    emojiTools.push(emojiList.slice(chunkIdx, chunkIdx + columns));
   }
   
   // const paletteGridStyle = {
@@ -34,7 +41,7 @@ export function ToolPalette({mouseIsDown, rightMouseIsDown, onPaletteSelect}: To
         gridData={emojiTools}
         mouseIsDown={mouseIsDown}
         rightMouseIsDown={rightMouseIsDown}
-        onCellClick={(row, col, emoji) => {
+        onCellMouseIsDown={(row, col, emoji) => {
           onPaletteSelect(emoji);
         }}
       />
