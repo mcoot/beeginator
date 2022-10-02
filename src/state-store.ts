@@ -3,10 +3,12 @@ import create from 'zustand';
 export interface AppState {
   gridData: (string | null)[][];
   currentTool: string | null;
+  currentPaletteFilter: string;
 
   update: (rowToUpdate: number, colToUpdate: number, newEmoji: string | null) => void;
   updateWithCurrentTool: (rowToUpdate: number, colToUpdate: number) => void;
   setTool: (newEmojiTool: string | null) => void;
+  setPaletteFilter: (newFilter: string) => void;
 }
 
 function updateGridData<T>(
@@ -25,8 +27,9 @@ function updateGridData<T>(
 }
 
 export const useAppState = create<AppState>()((set) => ({
-  gridData: Array(10).fill(Array(10).fill(null)),
+  gridData: Array(20).fill(Array(20).fill(null)),
   currentTool: null,
+  currentPaletteFilter: '',
 
   update: (rowToUpdate, colToUpdate, newEmoji) => set((state) => ({
     gridData: updateGridData(state.gridData, rowToUpdate, colToUpdate, newEmoji),
@@ -34,5 +37,6 @@ export const useAppState = create<AppState>()((set) => ({
   updateWithCurrentTool: (rowToUpdate, colToUpdate) => set((state) => ({
     gridData: updateGridData(state.gridData, rowToUpdate, colToUpdate, state.currentTool),
   })),
-  setTool: (newEmojiTool) => set({ currentTool: newEmojiTool })
+  setTool: (newEmojiTool) => set({ currentTool: newEmojiTool }),
+  setPaletteFilter: (newFilter) => set({currentPaletteFilter: newFilter}),
 }));
