@@ -1,5 +1,5 @@
 
-import * as emojiApiData from './emoji-local.json';
+import * as emojiApiData from './emoji-uqcs.json';
 
 // const emojiSet: {[key: string]: string} = {
 //   'hmmmm': 'https://emoji.slack-edge.com/T0D0DT1F0/hmmmm/7beb6f62ba141947.png',
